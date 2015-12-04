@@ -45,8 +45,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AudioStream.cs" />
      <Compile Include="Assets\Communicator.cs" />
      <Compile Include="Assets\Controller.cs" />
+     <Compile Include="Assets\DestroyOnTouch.cs" />
+     <Compile Include="Assets\MicInput.cs" />
      <Compile Include="Assets\Scripts\OSCTestSender.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.Advertisements">

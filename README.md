@@ -1,2 +1,3 @@
-# telemouth
-Telepresence device for hybrid theatrical character embodiment
+# telemouths
+A system for remote theatrical embodiment
+by Dan Sakamoto

@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Controller : MonoBehaviour {
 
 	public int mode = 0; // 0 = neutral, 1 = happy, 2 = sad
+
+	private int timer = 0, timerMax = 5;
+
+	private string ip;
+
+	public double micThreshold = .01;
 
 	private GameObject mouthNeutral,
 		mouthHappy, 
@@ -16,6 +23,8 @@ public class Controller : MonoBehaviour {
 		mouthSadClosed;
 
 	private GameObject communicator;
+
+	private bool initText = true;
 
 	void Start(){
 		mouthNeutral = GameObject.Find ("Mouth Neutral");
@@ -34,11 +43,21 @@ public class Controller : MonoBehaviour {
 
 		communicator = GameObject.FindGameObjectWithTag ("OSC");
 
+		ip = Network.player.ipAddress;
+
 	}
 	
 	void Update () {
 
 		mode = communicator.GetComponent<Communicator>().theValue;
+
+		if (initText && Time.fixedTime > 6) {
+			initText = false;
+			GameObject.Destroy (GameObject.Find ("Debug"));
+		}
+
+		if(initText)
+			GameObject.Find ("Debug").GetComponent<Text> ().text = ip + "\n" + mode;
 
 		/*
 		if(Input.GetKeyDown(KeyCode.Alpha1)){
@@ -65,12 +84,15 @@ public class Controller : MonoBehaviour {
 			mouthNeutral.SetActive (true);
 			mouthHappy.SetActive (false);
 			mouthSad.SetActive (false);
-			if ((int)(Time.fixedTime*6) % 2 == 0) {
+			if (MicInput.MicLoudness > micThreshold) {
+				timer = timerMax;
 				mouthNeutralOpen.SetActive (true);
 				mouthNeutralClosed.SetActive (false);
-			} else {
+			} else if(timer <= 0){
 				mouthNeutralOpen.SetActive (false);
 				mouthNeutralClosed.SetActive (true);
+			} else {
+				timer--;
 			}
 			break;
 
@@ -78,12 +100,15 @@ public class Controller : MonoBehaviour {
 			mouthNeutral.SetActive (false);
 			mouthHappy.SetActive (true);
 			mouthSad.SetActive (false);
-			if ((int)(Time.fixedTime*6) % 2 == 0) {
+			if (MicInput.MicLoudness > micThreshold) {
+				timer = timerMax;
 				mouthHappyOpen.SetActive (true);
 				mouthHappyClosed.SetActive (false);
-			} else {
+			} else if(timer <= 0){
 				mouthHappyOpen.SetActive (false);
 				mouthHappyClosed.SetActive (true);
+			} else {
+				timer--;
 			}
 			break;
 
@@ -91,12 +116,15 @@ public class Controller : MonoBehaviour {
 			mouthNeutral.SetActive (false);
 			mouthHappy.SetActive (false);
 			mouthSad.SetActive (true);
-			if ((int)(Time.fixedTime*6) % 2 == 0) {
+			if (MicInput.MicLoudness > micThreshold) {
+				timer = timerMax;
 				mouthSadOpen.SetActive (true);
 				mouthSadClosed.SetActive (false);
-			} else {
+			} else if(timer <= 0){
 				mouthSadOpen.SetActive (false);
 				mouthSadClosed.SetActive (true);
+			} else {
+				timer--;
 			}
 			break;
 		}

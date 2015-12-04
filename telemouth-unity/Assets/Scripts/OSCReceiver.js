@@ -8,6 +8,7 @@ private var handler : Osc;
 public var mode : int;
 //private var communicator;
 
+
 //VARIABLES YOU WANT TO BE ANIMATED
 private var yRot : int = 0; //the rotation around the y axis
 
@@ -31,7 +32,7 @@ function Update () {
 	//go.transform.Rotate(0, yRot, 0);
 	//mode = yRot;
 	
-	//var communicator = this.GetComponent("Communicator");
+	//var communi	cator = this.GetComponent("Communicator");
 //	communicator.setVal(yRot);
 	var meter = GameObject.Find("Meter");
 	meter.transform.position = Vector3(mode, 0, 0);	
@@ -46,7 +47,7 @@ public function AllMessageHandler(oscMessage: OscMessage){
 	var msgString = Osc.OscMessageToString(oscMessage); //the message and value combined
 	var msgAddress = oscMessage.Address; //the message parameters
 	var msgValue = oscMessage.Values[0]; //the message value
-	Debug.Log(msgString); //log the message and values coming from OSC
+	Debug.Log(msgValue); //log the message and values coming from OSC
 
 	//FUNCTIONS YOU WANT CALLED WHEN A SPECIFIC MESSAGE IS RECEIVED
 	switch (msgAddress){
